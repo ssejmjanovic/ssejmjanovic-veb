@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'leaflet/dist/leaflet.css';
+@import "tailwindcss";
+
+/* ── Frutiger Aero Design Token Theme ──────────────────────────────────────── */
+@theme {
+  /* Sky / water palette */
+  --color-sky-deep:  #0369a1;
+  --color-sky-aero:  #38bdf8;
+  --color-sky-light: #e0f2fe;
+
+  /* Green / nature palette */
+  --color-grass:       #22c55e;
+  --color-grass-deep:  #15803d;
+  --color-grass-light: #dcfce7;
+
+  /* Neutral "chrome" / ink palette */
+  --color-ink:         #0f172a;
+  --color-ink-light:   #475569;
+  --color-chrome:      #e2e8f0;
+  --color-chrome-dark: #64748b;
+
+  /* Typography */
+  --font-display: 'Nunito', sans-serif;
+  --font-body:    'Nunito Sans', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* Animations */
+  --animate-float:      float 4s ease-in-out infinite;
+  --animate-pulse_glow: pulse_glow 2s ease-in-out infinite;
+  --animate-shimmer:    shimmer 2.5s linear infinite;
+
+  /* Keyframes */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-6px); }
+  }
+  @keyframes pulse_glow {
+    0%, 100% { opacity: 1;   box-shadow: 0 0 12px rgba(56,189,248,0.3); }
+    50%      { opacity: 0.8; box-shadow: 0 0 24px rgba(56,189,248,0.5); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+  }
+
+  /* Custom box shadows */
+  --shadow-chrome: 0 2px 8px rgba(56,189,248,0.12), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-glow:   0 0 16px rgba(56,189,248,0.35);
+  --shadow-glass:  0 4px 32px rgba(56,189,248,0.10), 0 1.5px 8px rgba(0,0,0,0.05), inset 0 1.5px 3px rgba(255,255,255,0.7);
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    background: linear-gradient(135deg, #dff6ff 0%, #e0fdf4 50%, #eff6ff 100%);
+    min-height: 100%;
+  }
+
+  body {
+    @apply font-body text-ink;
+    background: transparent;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: rgba(56, 189, 248, 0.35);
+    color: #0c4a6e;
+  }
+}
+
+/* ── Component Classes ─────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Glassmorphism card */
+  .glass-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.38) 100%);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(56,189,248,0.28);
+    box-shadow: 0 4px 32px rgba(56,189,248,0.10), 0 1.5px 8px rgba(0,0,0,0.05), inset 0 1.5px 3px rgba(255,255,255,0.7);
+    border-radius: 1.25rem;
+  }
+
+  /* Aero primary button */
+  .btn-aero {
+    background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 55%, #0284c7 100%);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 2px 8px rgba(56,189,248,0.35), inset 0 1.5px 2px rgba(255,255,255,0.5);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    border-radius: 999px;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-aero:hover {
+    background: linear-gradient(180deg, #7dd3fc 0%, #38bdf8 55%, #0ea5e9 100%);
+    box-shadow: 0 4px 16px rgba(56,189,248,0.45), inset 0 1.5px 2px rgba(255,255,255,0.6);
+    transform: translateY(-1px);
+  }
+  .btn-aero:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(56,189,248,0.25);
+  }
+
+  /* Green nature button */
+  .btn-grass {
+    background: linear-gradient(180deg, #4ade80 0%, #22c55e 55%, #16a34a 100%);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 2px 8px rgba(34,197,94,0.35), inset 0 1.5px 2px rgba(255,255,255,0.5);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    border-radius: 999px;
+    transition: all 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-grass:hover {
+    background: linear-gradient(180deg, #86efac 0%, #4ade80 55%, #22c55e 100%);
+    box-shadow: 0 4px 16px rgba(34,197,94,0.45), inset 0 1.5px 2px rgba(255,255,255,0.6);
+    transform: translateY(-1px);
+  }
+
+  /* Chrome / glass input */
+  .input-aero {
+    background: linear-gradient(180deg, #f8fafc 0%, rgba(255,255,255,0.85) 100%);
+    border: 1px solid rgba(56,189,248,0.4);
+    box-shadow: inset 0 2px 4px rgba(148,163,184,0.15), 0 1px 3px rgba(255,255,255,0.8);
+    border-radius: 0.75rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    color: #0f172a;
+  }
+  .input-aero:focus {
+    border-color: #38bdf8;
+    box-shadow: inset 0 2px 4px rgba(148,163,184,0.1), 0 0 0 3px rgba(56,189,248,0.2);
+    outline: none;
+  }
+
+  /* Shimmer loader */
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2.5s linear infinite;
+  }
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(186,230,253,0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7dd3fc, #38bdf8); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #38bdf8, #0ea5e9); }
